@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useState } from "react";
 
 export default function Header() {
-  const [isLoged, setIsLoged] = useState(true);
+  const [isLoged, setIsLoged] = useState(false);
 
   return (
     <header className="w-full h-20 bg-primaryWhite dark:bg-zinc-900 flex justify-between items-center px-6 shadow-md">
@@ -15,8 +15,8 @@ export default function Header() {
           <Image
             src="/img/touristtable-logo.png"
             alt="TouristTable"
-            height={100}
-            width={100}
+            height={50}
+            width={50}
           />
         </Link>
 

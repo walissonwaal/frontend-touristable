@@ -1,18 +1,9 @@
-import { useState } from 'react';
+import { useState } from "react";
 
 interface ButtonProps {
-  children: any
-  disable?: boolean
-  enable?: boolean
+  children: any;
 }
 
 export default function Button(props: ButtonProps) {
-
-  return (
-    props.enable ? (
-      <button className="button">{props.children}</button>
-      ):(
-        <button className="button-disable cursor-default">{props.children}</button>
-    )
-  );
+  return <button className="button btn">{props.children}</button>;
 }

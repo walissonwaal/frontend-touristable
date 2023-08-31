@@ -21,6 +21,3 @@ body {
 .button {
   @apply px-4 py-2 rounded-md font-bold text-primaryWhite bg-primaryGreen hover:bg-secondaryGreen duration-150;
 }
-.button-disable {
-  @apply px-4 py-1 rounded-md font-bold text-primaryWhite bg-zinc-300 outline-none;
-}

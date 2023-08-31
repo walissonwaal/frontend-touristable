@@ -56,10 +56,10 @@ export default function PageSignInUser() {
 
   return (
     <div className="h-full w-full flex items-center justify-center">
-      <div className="w-full flex flex-col items-center">
-        <div className='hidden md:flex'>
-          <Image className="py-16" src='/img/touristtable-logo.png' width={200} height={200} alt='TouristTable' />
-        </div>
+      <div className="w-full flex flex-col items-center gap-20">
+        <h1 className="text-2xl">
+          Tourist<span className="font-thin">Table</span>
+        </h1>
         <form
           className="w-full flex flex-col gap-5 max-w-sm"
           action=""
