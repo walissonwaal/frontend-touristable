@@ -34,7 +34,7 @@ const Rate = (props: RateProps) => {
               className="mask mask-star-2 bg-orange-400"
             />
             </div>
-            <p className='text-sm'>{`${props.rating} ${props.media}`}</p>
+            <p className='text-sm select-none'>{`${props.rating} ${props.media}`}</p>
           </div>
   );
 }

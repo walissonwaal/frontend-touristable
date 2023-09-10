@@ -1,12 +1,25 @@
 "use client";
 import Input from "@/components/Input";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
+
+import { useDispatch, useSelector } from "react-redux";
+import userActionTypes from "@/redux/user/action-types";
 
 export default function PageSignInUser() {
+  const {currentUser} = useSelector(rootReducer => rootReducer.userReducer);
+
+  useEffect(() => {
+    // Verifique se o usuário está autenticado
+    if (currentUser) {
+      // Se estiver autenticado, redirecione para a página do feed
+      router.push('/users/feed');
+    }
+  }, [currentUser]);
+
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -24,8 +37,8 @@ export default function PageSignInUser() {
   const handleLogin = async () => {
     try {
       setIsLoading(true);
-      const response = await fetch("http://localhost:3001/user", {
-        method: "GET",
+      const response = await fetch("http://localhost:3001/user/login", {
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
@@ -34,11 +47,35 @@ export default function PageSignInUser() {
           password,
         }),
       });
-      console.log(email, password);
+      
       if (response.ok) {
-        // Successful login logic
-        setIsLoading(false);
+        const data = await response.json();
+        const token = data.token;
+
+        // Armazene o token no Local Storage
+        localStorage.setItem("accessToken", token);
+
+        const userResponse = await fetch(`http://localhost:3001/user/${email}`);
+
+      if (!userResponse.ok) {
+        throw new Error("Erro ao buscar usuário");
+      }
+
+      const userData = await userResponse.json();
+        
+      dispatch({
+        type: userActionTypes.LOGIN,
+        payload: {
+          name: `${userData.first_name} ${userData.last_name}`,
+          location: userData.points || 'Bem vindo(a) de volta 🙂',
+          image: "/img/user.png",
+          accessToken: token
+        },
+      });
+        
         router.push("/users/feed");
+        setIsLoading(false);
+
       } else {
         setIsLoading(false);
         const errorData = await response.json();

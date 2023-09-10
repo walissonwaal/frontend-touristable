@@ -2,15 +2,16 @@
 import { IconUserPlus } from "@tabler/icons-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useSelector } from 'react-redux';
 
 export default function Header() {
-  const [isLoged, setIsLoged] = useState(false);
+
+  const { currentUser } = useSelector(rootReducer => rootReducer.userReducer)
 
   return (
     <header className="w-full h-20 bg-primaryWhite dark:bg-zinc-900 flex justify-between items-center px-6 shadow-md">
-      <div className={`${!isLoged ? 'w-20' : ''}`}>
-        {!isLoged ? (
+      <div className={`${!currentUser ? 'w-20' : ''}`}>
+        {!currentUser ? (
         <Link href="/">
           <Image
             src="/img/touristtable-logo.png"
@@ -22,13 +23,13 @@ export default function Header() {
 
         ):(
           <div className='flex flex-col'>
-            <span className=''>Walisson Gomes</span>
-            <span className="font-bold text-xs">Brasília, DF</span>
+            <span className=''>{currentUser.name}</span>
+            <span className="font-bold text-xs">{currentUser.location}</span>
           </div>
         )}
       </div>
       <div>
-        {!isLoged ? (
+        {!currentUser ? (
           <Link
             href="/users/signin"
             className="text-primaryGreen hover:text-secondaryGreen"
@@ -38,7 +39,7 @@ export default function Header() {
         ) : (
           <div className="avatar online">
             <div className="w-12 rounded-full">
-              <img src="/img/avatar.jpg" />
+              <img src={currentUser.image} />
             </div>
           </div>
         )}
