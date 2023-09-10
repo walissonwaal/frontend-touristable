@@ -1,9 +1,9 @@
-import Carousel from "@/components/Carousel";
+// import Carousel from "@/components/Carousel";
 
 const page = () => {
   return (
     <div>
-      <Carousel />
+      {/* <Carousel /> */}
     </div>
   );
 }

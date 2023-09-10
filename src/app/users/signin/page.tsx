@@ -5,10 +5,11 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/redux/root-reducer";
 import userActionTypes from "@/redux/user/action-types";
 
 export default function PageSignInUser() {
-  const {currentUser} = useSelector(rootReducer => rootReducer.userReducer);
+  const { currentUser } = useSelector((state: RootState) => state.userReducer);
 
   useEffect(() => {
     // Verifique se o usuário está autenticado
@@ -52,8 +53,10 @@ export default function PageSignInUser() {
         const data = await response.json();
         const token = data.token;
 
-        // Armazene o token no Local Storage
-        localStorage.setItem("accessToken", token);
+        if (typeof window !== 'undefined') {
+          localStorage.setItem("accessToken", token);
+        }
+        
 
         const userResponse = await fetch(`http://localhost:3001/user/${email}`);
 
